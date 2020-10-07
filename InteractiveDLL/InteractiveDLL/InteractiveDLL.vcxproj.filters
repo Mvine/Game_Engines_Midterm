@@ -21,12 +21,18 @@
     <ClCompile Include="Wrapper.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="CheckpointTimeLogger.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PluginSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckpointTimeLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

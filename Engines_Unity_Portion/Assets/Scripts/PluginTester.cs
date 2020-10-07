@@ -5,44 +5,91 @@ using UnityEngine;
 
 public class PluginTester : MonoBehaviour
 {
-    public GameObject cube;
 
     private const string DLL_NAME = "InteractiveDLL";
 
-    [StructLayout(LayoutKind.Sequential)]
-    struct Vector3D
+    //Methods
+    [DllImport(DLL_NAME)]
+    private static extern void ResetLogger();
+
+    //Setters
+    [DllImport(DLL_NAME)]
+    private static extern void SaveCheckpointTime(float p_RTBC);
+
+    //Getters
+    [DllImport(DLL_NAME)]
+    private static extern float GetCheckpointTime(int p_index);
+
+    [DllImport(DLL_NAME)]
+    private static extern int GetNumCheckpoints();
+
+    [DllImport(DLL_NAME)]
+    private static extern float GetTotalTime();
+
+
+
+    private float m_lastTime = 0.0f;
+
+    public void SaveTimeTest(float p_CheckpointTime)
     {
-        public float x;
-        public float y;
-        public float z;
+        SaveCheckpointTime(p_CheckpointTime);
+        Debug.Log("Checkpoint time of" + p_CheckpointTime);
     }
 
-    [DllImport(DLL_NAME)]
-    private static extern int GetID();
+    public float LoadTimeTest(int p_index)
+    {
+        if (p_index >= GetNumCheckpoints())
+        {
+            return -1;
+        }
+        else
+        {
+            return GetCheckpointTime(p_index);
+        }
+    }
 
-    [DllImport(DLL_NAME)]
-    private static extern void SetID(int id);
+    public float LoadTotalTimeTest()
+    {
+        return GetTotalTime();
+    }
 
-    [DllImport(DLL_NAME)]
-    private static extern Vector3D GetPosition();
+    public void ResetLoggerTest()
+    {
+        ResetLogger();
+    }
 
-    [DllImport(DLL_NAME)]
-    private static extern void SetPosition(float x, float y, float z);
+
+    void Start()
+    {
+        m_lastTime = Time.time;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        for (int i = 0; i < 10; i++)
         {
-            SetID(911);
-            Debug.Log(GetID());
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            {
+                Debug.Log(LoadTimeTest(i));
+            }
 
-            SetPosition(3.4f, 5.7f, 9.8f);
-            Debug.Log(GetPosition().x);
-            Debug.Log(GetPosition().y);
-            Debug.Log(GetPosition().z);
-
-            cube.transform.position = new Vector3(GetPosition().x, GetPosition().y, GetPosition().z);
         }
     }
+
+    void OnTriggerEnter()
+    {
+        float currentTime = Time.time;
+        float checkpointTime = currentTime - m_lastTime;
+        m_lastTime = currentTime;
+
+        SaveTimeTest(checkpointTime);
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log(LoadTotalTimeTest());
+        ResetLoggerTest();
+    }
+
 }

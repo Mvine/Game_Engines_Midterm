@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CheckpointTimeLogger.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CheckpointTimeLogger.h" />
     <ClInclude Include="PluginSettings.h" />
     <ClInclude Include="Wrapper.h" />
   </ItemGroup>
