@@ -6,6 +6,11 @@ using UnityEngine;
 public class PluginTester : MonoBehaviour
 {
 
+
+    public List<Transform> m_CheckpointLocations;
+
+    private int m_CurrentCheckpoint = 0;
+
     private const string DLL_NAME = "InteractiveDLL";
 
     //Methods
@@ -33,7 +38,7 @@ public class PluginTester : MonoBehaviour
     public void SaveTimeTest(float p_CheckpointTime)
     {
         SaveCheckpointTime(p_CheckpointTime);
-        Debug.Log("Checkpoint time of" + p_CheckpointTime);
+        p_CheckpointTime = 0.0f;
     }
 
     public float LoadTimeTest(int p_index)
@@ -79,11 +84,26 @@ public class PluginTester : MonoBehaviour
 
     void OnTriggerEnter()
     {
+
+            
+
         float currentTime = Time.time;
         float checkpointTime = currentTime - m_lastTime;
         m_lastTime = currentTime;
 
+        Debug.Log(checkpointTime);
         SaveTimeTest(checkpointTime);
+
+        m_CurrentCheckpoint++;
+
+        if (m_CurrentCheckpoint >= m_CheckpointLocations.Count) 
+        {
+            m_CurrentCheckpoint = 0;
+        }
+
+        this.transform.position = m_CheckpointLocations[m_CurrentCheckpoint].position;
+
+
     }
 
     void OnDestroy()

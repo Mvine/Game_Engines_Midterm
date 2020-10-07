@@ -16,7 +16,6 @@ public class CharacterMotor : MonoBehaviour
     public CharacterController m_Controller;
     public Transform m_GroundCheck;
     public LayerMask m_GroundMask;
-    public LayerMask m_DeathMask;
 
     //Public Variables
     public float m_SprintMultiplier = 10.0f;
@@ -41,39 +40,28 @@ public class CharacterMotor : MonoBehaviour
 
         m_MovementDir = transform.right * m_X + transform.forward * m_Z;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            m_Sprinting = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            m_Sprinting = false;
-        }
+        if (Input.GetKeyDown(KeyCode.LeftShift)) m_Sprinting = true;
+        if (Input.GetKeyUp(KeyCode.LeftShift)) m_Sprinting = false;
 
         if (m_Sprinting)
-        {
             m_Controller.Move(m_MovementDir * m_MoveSpeed * m_SprintMultiplier * Time.deltaTime);
-        }
         else
-        {
             m_Controller.Move(m_MovementDir * m_MoveSpeed * Time.deltaTime);
-        }
 
 
-        if (Input.GetKeyDown(KeyCode.Space)) m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+        if (Input.GetKeyDown(KeyCode.Space) && m_Grounded) m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
 
         m_Controller.Move(m_Velocity * Time.deltaTime);
     }
 
-    void OnTriggerEnter(Collider p_collider)
+    private void OnTriggerEnter(Collider p_collider)
     {
-        if (p_collider.tag == "Death")
-        {
-            Debug.Log("Hey you died");
-        }
+        //if (p_collider.tag == "Death")
+        //{
+        //    Debug.Log("Hey you died");
+        //}
     }
-
-
 }
