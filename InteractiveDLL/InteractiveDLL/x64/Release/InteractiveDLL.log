@@ -1,0 +1,13 @@
+﻿  GameObject.cpp
+  Main.cpp
+  Wrapper.cpp
+     Creating library C:\Users\Marcus\source\repos\InteractiveDLL\x64\Release\InteractiveDLL.lib and object C:\Users\Marcus\source\repos\InteractiveDLL\x64\Release\InteractiveDLL.exp
+  Generating code
+  0 of 12 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+GameObject.obj : warning LNK4020: a type record in 'c:\users\marcus\source\repos\interactivedll\interactivedll\x64\release\vc142.pdb' is corrupted; some symbols and types may not be accessible from the debugger
+Main.obj : warning LNK4020: a type record in 'c:\users\marcus\source\repos\interactivedll\interactivedll\x64\release\vc142.pdb' is corrupted; some symbols and types may not be accessible from the debugger
+Wrapper.obj : warning LNK4020: a type record in 'c:\users\marcus\source\repos\interactivedll\interactivedll\x64\release\vc142.pdb' is corrupted; some symbols and types may not be accessible from the debugger
+  InteractiveDLL.vcxproj -> C:\Users\Marcus\source\repos\InteractiveDLL\x64\Release\InteractiveDLL.dll
