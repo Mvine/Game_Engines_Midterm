@@ -6,11 +6,6 @@ using UnityEngine;
 public class PluginTester : MonoBehaviour
 {
 
-
-    public List<Transform> m_CheckpointLocations;
-
-    private int m_CurrentCheckpoint = 0;
-
     private const string DLL_NAME = "InteractiveDLL";
 
     //Methods
@@ -31,10 +26,15 @@ public class PluginTester : MonoBehaviour
     [DllImport(DLL_NAME)]
     private static extern float GetTotalTime();
 
+    //Public Variables
+    public List<Transform> m_CheckpointLocations;
 
-
+    //Private Variables
+    private int m_CurrentCheckpoint = 0;
     private float m_lastTime = 0.0f;
 
+
+    //Public Methods
     public void SaveTimeTest(float p_CheckpointTime)
     {
         SaveCheckpointTime(p_CheckpointTime);
@@ -64,6 +64,9 @@ public class PluginTester : MonoBehaviour
     }
 
 
+
+
+    //Monobehaviour Methods
     void Start()
     {
         m_lastTime = Time.time;
@@ -82,21 +85,19 @@ public class PluginTester : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter() //The checkpoint body teleports away to the next checkpoint location after the player makes contact
     {
-
-            
-
+        //Clock the time between checkpoints
         float currentTime = Time.time;
         float checkpointTime = currentTime - m_lastTime;
         m_lastTime = currentTime;
 
-        Debug.Log(checkpointTime);
         SaveTimeTest(checkpointTime);
 
+        //Send the checkpoint to the next location
         m_CurrentCheckpoint++;
 
-        if (m_CurrentCheckpoint >= m_CheckpointLocations.Count) 
+        if (m_CurrentCheckpoint >= m_CheckpointLocations.Count) //If the last checkpoint is hit the checkpoint returns to the beginning
         {
             m_CurrentCheckpoint = 0;
         }
