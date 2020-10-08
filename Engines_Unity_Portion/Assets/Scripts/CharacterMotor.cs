@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class CharacterMotor : MonoBehaviour
@@ -14,6 +16,7 @@ public class CharacterMotor : MonoBehaviour
 
     //Public References
     public CharacterController m_Controller;
+    public GameObject m_CheckpointManager;
     public Transform m_GroundCheck;
     public LayerMask m_GroundMask;
 
@@ -23,6 +26,7 @@ public class CharacterMotor : MonoBehaviour
     public float m_MoveSpeed = 10.0f;
     public float m_Gravity = -9.81f;
     public float m_JumpHeight = 2.0f;
+    public float m_SpawnHeight = 1.0f;
 
 // Update is called once per frame
 
@@ -57,11 +61,32 @@ public class CharacterMotor : MonoBehaviour
         m_Controller.Move(m_Velocity * Time.deltaTime);
     }
 
+    private void OnDeath()  //Seperating this from OnTriggerEnter so that I can use trigger volumes for other purposes
+    {
+        PluginTester plugin = m_CheckpointManager.GetComponentInChildren<PluginTester>();
+
+        int respawnIndex = 0;
+
+        if (plugin.m_CurrentCheckpoint > 0)
+        {
+            respawnIndex = plugin.m_CurrentCheckpoint-1;
+        }
+        
+        //this.transform.position = plugin.m_CheckpointLocations[respawnIndex].transform.position + (Vector3.up * m_SpawnHeight);
+
+        this.transform.SetPositionAndRotation(plugin.m_CheckpointLocations[respawnIndex].transform.position + (Vector3.up * m_SpawnHeight), Quaternion.identity);
+
+        Debug.Log("hah you suck");
+
+        //TODO: add a visual tell instead of just teleporting the player
+
+    }
     private void OnTriggerEnter(Collider p_collider)
     {
-        //if (p_collider.tag == "Death")
-        //{
-        //    Debug.Log("Hey you died");
-        //}
+        if (p_collider.gameObject.layer == 10) //Layer 10 the death causing objects
+        {
+            OnDeath();
+        }
+
     }
 }

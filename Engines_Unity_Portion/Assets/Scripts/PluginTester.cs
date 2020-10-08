@@ -30,7 +30,7 @@ public class PluginTester : MonoBehaviour
     public List<Transform> m_CheckpointLocations;
 
     //Private Variables
-    private int m_CurrentCheckpoint = 0;
+    public int m_CurrentCheckpoint = 0;
     private float m_lastTime = 0.0f;
 
 
