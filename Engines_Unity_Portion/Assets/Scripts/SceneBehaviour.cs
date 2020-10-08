@@ -22,4 +22,9 @@ public class SceneBehaviour : MonoBehaviour
         SceneManager.LoadSceneAsync(p_SceneName);
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
