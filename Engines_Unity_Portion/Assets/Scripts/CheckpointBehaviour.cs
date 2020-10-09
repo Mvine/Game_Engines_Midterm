@@ -64,26 +64,12 @@ public class CheckpointBehaviour : MonoBehaviour
     }
 
 
-
-
     //Monobehaviour Methods
     void Start()
     {
         m_lastTime = Time.time;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
-            {
-                Debug.Log(LoadTimeTest(i));
-            }
-
-        }
-    }
 
     void OnTriggerEnter() //The checkpoint body teleports away to the next checkpoint location after the player makes contact
     {
@@ -105,12 +91,6 @@ public class CheckpointBehaviour : MonoBehaviour
         this.transform.position = m_CheckpointLocations[m_CurrentCheckpoint].position;
 
 
-    }
-
-    void OnDestroy()
-    {
-        Debug.Log(LoadTotalTimeTest());
-        ResetLoggerTest();
     }
 
 }
