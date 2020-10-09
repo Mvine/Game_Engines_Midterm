@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterMotor : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class CharacterMotor : MonoBehaviour
 
     private void OnDeath()  //Seperating this from OnTriggerEnter so that I can use trigger volumes for other purposes
     {
-        PluginTester plugin = m_CheckpointManager.GetComponentInChildren<PluginTester>();
+        CheckpointBehaviour plugin = m_CheckpointManager.GetComponentInChildren<CheckpointBehaviour>();
 
         int respawnIndex = 0;
 
@@ -86,6 +87,12 @@ public class CharacterMotor : MonoBehaviour
         if (p_collider.gameObject.layer == 10) //Layer 10 the death causing objects
         {
             OnDeath();
+        }
+
+        else if (p_collider.gameObject.layer == 11)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadSceneAsync("EndMenu");
         }
 
     }
