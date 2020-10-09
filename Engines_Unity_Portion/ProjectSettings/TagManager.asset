@@ -5,11 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Death
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
+  - Total
   layers:
   - Default
   - TransparentFX

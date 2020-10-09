@@ -30,57 +30,46 @@ public class TimeDisplayer : MonoBehaviour
 
     // Update is called once per frame
 
+    private GameObject testObject;
+    public GameObject m_TimerPrefab;
+    
+
     void Start()
     {
         float thisCheckpointTime = 0.0f;
 
-        int index = int.Parse(tag);
-
-        //switch (tag)
-        //{
-        //    case "1":
-        //        index = 0;
-        //        break;
-        //    case "2":
-        //        index = 1;
-        //        break;
-        //    case "3":
-        //        index = 2;
-        //        break;
-        //    case "4":
-        //        index = 3;
-        //        break;
-        //    case "5":
-        //        index = 4;
-        //        break;
-        //}
-
-
-
-        if (index < GetNumCheckpoints() && index > 0)
+        for (int i = 0; i < GetNumCheckpoints(); i++) //Spawn in a textbox for each checkpoint
         {
-        thisCheckpointTime = GetCheckpointTime(index-1);
-        this.GetComponent<TextMeshProUGUI>().text = "Checkpoint " + this.tag + " Time : " + (thisCheckpointTime);
-        }
-        else if (index == 5)
-        {
-            this.GetComponent<TextMeshProUGUI>().text = "Total Time : " + GetTotalTime();
-        }
-        else
-        {
-            this.GetComponent<TextMeshProUGUI>().text = "Checkpoint " + this.tag + " Time : ~";
+            testObject = Instantiate(m_TimerPrefab);
+            testObject.name = "Checkpoint Textbox #" + i;
+            testObject.transform.SetParent(this.transform);
+            testObject.transform.position = Vector3.zero;
+            testObject.transform.localPosition = new Vector3(0, 185 - i * 50, 0); //position them appropriately 
+
+            thisCheckpointTime = GetCheckpointTime(i);
+            testObject.GetComponent<TextMeshProUGUI>().text = "Checkpoint " + i + " Time : " + thisCheckpointTime;
         }
 
-
+        testObject = Instantiate(m_TimerPrefab);
+        testObject.name = "Total Time Textbox";
+        testObject.transform.SetParent(transform); //seperate call for the total time
+        testObject.transform.position = Vector3.zero;
+        testObject.transform.localPosition = new Vector3(0, -75, 0);
+        testObject.GetComponent<TextMeshProUGUI>().text = "Total Time : " + GetTotalTime();
     }
 
-    //void Update()
-    //{
-    //}
 
     private void OnDestroy()
     {
         Debug.Log(GetTotalTime());
+
+        Debug.Log(GetCheckpointTime(0));
+        Debug.Log(GetCheckpointTime(1));
+        Debug.Log(GetCheckpointTime(2));
+        Debug.Log(GetCheckpointTime(3));
+
+
+        Debug.Log(GetNumCheckpoints());
         ResetLogger();
     }
 }
