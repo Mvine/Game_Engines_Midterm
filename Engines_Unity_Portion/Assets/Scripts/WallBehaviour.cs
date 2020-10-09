@@ -21,7 +21,6 @@ public class WallBehaviour : MonoBehaviour
         if (p_Collider.CompareTag("Player"))
         {
             GetComponentInChildren<Animator>().SetBool("Cycling", true);
-            GetComponentInChildren<Animator>().Play("CycleMove");
         }
     }
 

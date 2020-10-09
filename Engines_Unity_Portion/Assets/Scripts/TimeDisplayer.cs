@@ -44,10 +44,10 @@ public class TimeDisplayer : MonoBehaviour
             testObject.name = "Checkpoint Textbox #" + i;
             testObject.transform.SetParent(this.transform);
             testObject.transform.position = Vector3.zero;
-            testObject.transform.localPosition = new Vector3(0, 185 - i * 50, 0); //position them appropriately 
+            testObject.transform.localPosition = new Vector3(0, 235 - i * 50, 0); //position them appropriately 
 
             thisCheckpointTime = GetCheckpointTime(i);
-            testObject.GetComponent<TextMeshProUGUI>().text = "Checkpoint " + i + " Time : " + thisCheckpointTime;
+            testObject.GetComponent<TextMeshProUGUI>().text = "Checkpoint " + (i+1) + " Time : " + thisCheckpointTime;
         }
 
         testObject = Instantiate(m_TimerPrefab);
@@ -62,13 +62,6 @@ public class TimeDisplayer : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log(GetTotalTime());
-
-        Debug.Log(GetCheckpointTime(0));
-        Debug.Log(GetCheckpointTime(1));
-        Debug.Log(GetCheckpointTime(2));
-        Debug.Log(GetCheckpointTime(3));
-
-
         Debug.Log(GetNumCheckpoints());
         ResetLogger();
     }
